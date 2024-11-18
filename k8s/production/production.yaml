@@ -1,0 +1,30 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: secret-full-production
+spec:
+  replicas: 3
+  selector:
+      matchLabels:
+          app: secret
+          role: full
+          env: production
+  template:
+    metadata:
+      name: full
+      labels:
+        app: secret
+        role: full
+        env: production
+    spec:
+      containers:
+      - name: full
+        image: asia-northeast3-docker.pkg.dev/vital-wavelet-381119/my-repository/docker-springboot:0.1
+        resources:
+          limits:
+            memory: "500Mi"
+            cpu: "100m"
+        imagePullPolicy: Always
+        ports:
+        - name: full
+          containerPort: 8080

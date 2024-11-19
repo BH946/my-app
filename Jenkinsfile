@@ -85,6 +85,7 @@ spec:
                             gcloud config set project ${PROJECT}
                             gcloud container clusters get-credentials ${CLUSTER} --zone ${CLUSTER_ZONE} --project ${PROJECT}
                             sed -i.bak 's#DOCKER_IMAGE_PLACEHOLDER#${IMAGE_TAG}#' ./k8s/production/*.yaml
+                            cat ./k8s/production/production.yaml
                             kubectl apply -f ./k8s/service
                             kubectl apply -f ./k8s/production
                         """

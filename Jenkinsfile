@@ -4,7 +4,7 @@ pipeline {
         APP_NAME = "docker-springboot"
         FULL_SVC_NAME = "secret-full-svc"
         CLUSTER = "lab-cluster"
-        CLUSTER_ZONE = "asia-northeast3"
+        CLUSTER_ZONE = "asia-northeast3-a"
         IMAGE_TAG = "asia-northeast3-docker.pkg.dev/${PROJECT}/my-repository/${APP_NAME}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
         JENKINS_CRED = "${PROJECT}"
         GCP_CRED = "99e295f9-753c-459d-9b77-1c814a4f83c3" // Jenkins에 등록한 GCP 자격 증명 ID
@@ -38,6 +38,7 @@ spec:
     }
 
     stages {
+    /*
         stage('Build and Push Docker Image') {
             steps {
                 container('gcloud') {
@@ -55,7 +56,7 @@ spec:
                 }
             }
         }
-
+*/
         stage('Deploy Canary') {
             when { branch 'canary' }
             steps {

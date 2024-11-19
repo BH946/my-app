@@ -37,15 +37,6 @@ spec:
     }
 
     stages {
-        stage('Build and Push Docker Image') {
-            steps {
-                container('gcloud') {
-                    sh """
-                        PYTHONUNBUFFERED=1 gcloud builds submit -t ${IMAGE_TAG} .
-                    """
-                }
-            }
-        }
 
         stage('Deploy Canary') {
             when { branch 'canary' }

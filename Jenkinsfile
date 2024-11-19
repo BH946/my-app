@@ -66,7 +66,7 @@ spec:
                             gcloud auth activate-service-account --key-file=\$GOOGLE_APPLICATION_CREDENTIALS
                             gcloud config set project ${PROJECT}
                             gcloud container clusters get-credentials ${CLUSTER} --zone ${CLUSTER_ZONE} --project ${PROJECT}
-                            sed -i.bak 's#DOCKER_IMAGE_PLACEHOLDER#${IMAGE_TAG}#' ./k8s/canary/*.yaml
+                            sed -i.bak 's#asia-northeast3-docker.pkg.dev/vital-wavelet-381119/my-repository/docker-springboot:0.1#${IMAGE_TAG}#' ./k8s/canary/*.yaml
                             kubectl apply -f ./k8s/service
                             kubectl apply -f ./k8s/canary
                         """
@@ -84,8 +84,7 @@ spec:
                             gcloud auth activate-service-account --key-file=\$GOOGLE_APPLICATION_CREDENTIALS
                             gcloud config set project ${PROJECT}
                             gcloud container clusters get-credentials ${CLUSTER} --zone ${CLUSTER_ZONE} --project ${PROJECT}
-                            sed -i.bak 's#DOCKER_IMAGE_PLACEHOLDER#${IMAGE_TAG}#' ./k8s/production/*.yaml
-                            cat ./k8s/production/production.yaml
+                            sed -i.bak 's#asia-northeast3-docker.pkg.dev/vital-wavelet-381119/my-repository/docker-springboot:0.1#${IMAGE_TAG}#' ./k8s/production/*.yaml
                             kubectl apply -f ./k8s/service
                             kubectl apply -f ./k8s/production
                         """
@@ -107,7 +106,7 @@ spec:
                             gcloud config set project ${PROJECT}
                             gcloud container clusters get-credentials ${CLUSTER} --zone ${CLUSTER_ZONE} --project ${PROJECT}
                             kubectl get ns ${env.BRANCH_NAME} || kubectl create ns ${env.BRANCH_NAME}
-                            sed -i.bak 's#DOCKER_IMAGE_PLACEHOLDER#${IMAGE_TAG}#' ./k8s/dev/*.yaml
+                            sed -i.bak 's#asia-northeast3-docker.pkg.dev/vital-wavelet-381119/my-repository/docker-springboot:0.1#${IMAGE_TAG}#' ./k8s/dev/*.yaml
                             kubectl apply -f ./k8s/service -n ${env.BRANCH_NAME}
                             kubectl apply -f ./k8s/dev -n ${env.BRANCH_NAME}
                             echo 'To access your environment run `kubectl proxy`'

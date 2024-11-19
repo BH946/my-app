@@ -41,9 +41,7 @@ spec:
             steps {
                 container('gcloud') {
                     sh """
-                        gcloud auth configure-docker asia-northeast3-docker.pkg.dev
-                        docker build -t ${IMAGE_TAG} .
-                        docker push ${IMAGE_TAG}
+                        PYTHONUNBUFFERED=1 gcloud builds submit -t ${IMAGE_TAG} .
                     """
                 }
             }

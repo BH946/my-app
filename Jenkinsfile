@@ -38,7 +38,7 @@ spec:
     }
 
     stages {
-    /*
+
         stage('Build and Push Docker Image') {
             steps {
                 container('gcloud') {
@@ -56,7 +56,7 @@ spec:
                 }
             }
         }
-*/
+
         stage('Deploy Canary') {
             when { branch 'canary' }
             steps {
@@ -69,7 +69,6 @@ spec:
                             sed -i.bak 's#DOCKER_IMAGE_PLACEHOLDER#${IMAGE_TAG}#' ./k8s/canary/*.yaml
                             kubectl apply -f ./k8s/service
                             kubectl apply -f ./k8s/canary
-                            echo http://`kubectl --namespace=production get service/${FULL_SVC_NAME} -o jsonpath='{.status.loadBalancer.ingress[0].ip}'` > ${FULL_SVC_NAME}
                         """
                     }
                 }
@@ -88,7 +87,6 @@ spec:
                             sed -i.bak 's#DOCKER_IMAGE_PLACEHOLDER#${IMAGE_TAG}#' ./k8s/production/*.yaml
                             kubectl apply -f ./k8s/service
                             kubectl apply -f ./k8s/production
-                            echo http://`kubectl --namespace=production get service/${FULL_SVC_NAME} -o jsonpath='{.status.loadBalancer.ingress[0].ip}'` > ${FULL_SVC_NAME}
                         """
                     }
                 }

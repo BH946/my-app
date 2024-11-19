@@ -8,7 +8,7 @@ pipeline {
         IMAGE_TAG = "asia-northeast3-docker.pkg.dev/${PROJECT}/my-repository/${APP_NAME}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
         JENKINS_CRED = "${PROJECT}"
 
-        GCP_CRED = "60700bb4-22b5-40aa-ba22-28df3979e8db" // Jenkins에 등록한 GCP 자격 증명 ID
+        GCP_CRED = "99e295f9-753c-459d-9b77-1c814a4f83c3" // Jenkins에 등록한 GCP 자격 증명 ID
     }
 
     agent {

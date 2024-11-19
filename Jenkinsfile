@@ -44,6 +44,10 @@ spec:
                 container('gcloud') {
                 withCredentials([file(credentialsId: env.GCP_CRED, variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                     	sh """
+                    	    # JSON 확인 위한 LOG
+                    	    echo "Using credentials from: \$GOOGLE_APPLICATION_CREDENTIALS"
+		            cat \$GOOGLE_APPLICATION_CREDENTIALS
+                            gcloud config set project ${PROJECT}
                             # GCP 자격 증명을 활성화한 후 Docker 이미지 빌드 및 푸시
                             gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
                             PYTHONUNBUFFERED=1 gcloud builds submit -t ${IMAGE_TAG} .

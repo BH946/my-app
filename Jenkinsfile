@@ -7,6 +7,8 @@ pipeline {
         CLUSTER_ZONE = "asia-northeast3"
         IMAGE_TAG = "asia-northeast3-docker.pkg.dev/${PROJECT}/my-repository/${APP_NAME}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
         JENKINS_CRED = "${PROJECT}"
+
+        GCP_CRED = "60700bb4-22b5-40aa-ba22-28df3979e8db" // Jenkins에 등록한 GCP 자격 증명 ID
     }
 
     agent {
@@ -37,6 +39,20 @@ spec:
     }
 
     stages {
+        stage('Build and Push Docker Image') {
+            steps {
+                container('gcloud') {
+                withCredentials([file(credentialsId: env.GCP_CRED, variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                    	sh """
+                            # GCP 자격 증명을 활성화한 후 Docker 이미지 빌드 및 푸시
+                            gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+                            PYTHONUNBUFFERED=1 gcloud builds submit -t ${IMAGE_TAG} .
+                    	"""
+                    }
+                }
+            }
+        }
+
 
         stage('Deploy Canary') {
             when { branch 'canary' }
